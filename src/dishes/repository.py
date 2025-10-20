@@ -15,10 +15,13 @@ class DishRepository:
         self.session = session
 
     async def create(self, dish_data: Mapping[str, Any]) -> Dish:
-        """创建数据"""
         dish = Dish(**dish_data)
         self.session.add(dish)
-        await self.session.commit()
+        try:
+            await self.session.commit()
+        except IntegrityError:
+            await self.session.rollback()
+            raise
         await self.session.refresh(dish)
         return dish
 

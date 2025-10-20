@@ -4,7 +4,8 @@ from loguru import logger
 from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker, AsyncSession
 
 from src.core.config import settings
-from src.core.base_model import Base
+from src.core.base_model import Base, DateTimeMixin
+from src.dishes.model import Dish
 
 # 创建数据库引擎和会话工厂
 engine = create_async_engine(settings.database_url, **settings.engine_options)
