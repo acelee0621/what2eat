@@ -24,7 +24,7 @@ class ForbiddenException(HTTPException):
 async def global_exception_handler(request: Request, exc: Exception) -> JSONResponse:
     logger.exception(f"Unhandled exception at {request.url.path}: {exc}")
     return JSONResponse(
-        status_code=500,
+        status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
         content={"detail": "Internal server error"},
     )
     

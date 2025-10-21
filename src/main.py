@@ -3,6 +3,7 @@ from fastapi import FastAPI, Response, Depends
 
 from src.core.config import settings
 from src.lifespan import lifespan
+from src.core.exception import register_exception_handlers
 
 # from src.core.config import get_settings, Settings
 
@@ -14,6 +15,7 @@ app = FastAPI(
     lifespan=lifespan,
 )
 
+register_exception_handlers(app)
 
 # 路由引入
 # @app.get("/")

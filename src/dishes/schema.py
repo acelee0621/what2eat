@@ -19,7 +19,7 @@ class DishUpdate(BaseModel):
     
 
 # 响应模型（含时间戳）
-class DishRead(DishBase):
+class DishResponse(DishBase):
     id: int
     created_at: datetime
     
