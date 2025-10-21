@@ -20,6 +20,7 @@ class DishService:
 
     def __init__(self, repository: DishRepository):
         self.repository = repository
+        
 
     async def create_dish(self, dish_data: DishCreate) -> DishResponse:
         """创建菜品，处理唯一约束冲突"""

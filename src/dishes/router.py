@@ -23,7 +23,8 @@ async def create_dish(
     dish_data: DishCreate, service: DishService = Depends(get_dish_service)
 ):
     """创建菜品"""
-    return await service.create_dish(dish_data.model_dump(exclude_unset=True))
+    new_dish = await service.create_dish(dish_data)
+    return new_dish
 
 
 @router.get("/{dish_id}", response_model=DishResponse)
@@ -32,6 +33,7 @@ async def get_dish(
     service: DishService = Depends(get_dish_service),
 ):
     """获取单个菜品"""
+
     logger.debug(f"正在获取菜品 ID: {dish_id}")
     try:
         dish = await service.get_dish_by_id(dish_id)
@@ -52,23 +54,25 @@ async def list_dishes(
     service: DishService = Depends(get_dish_service),
 ):
     """查询所有菜品"""
-    return await service.list_dishes(
+    dishes = await service.list_dishes(
         search=search,
         order_by=order_by,
         direction=direction,
         limit=limit,
         offset=offset,
     )
+    return dishes
 
 
-@router.put("/{dish_id}", response_model=DishResponse)
+@router.patch("/{dish_id}", response_model=DishResponse)
 async def update_dish(
     dish_data: DishUpdate,
     dish_id: int = Path(..., description="菜品ID"),
     service: DishService = Depends(get_dish_service),
 ):
     """更新菜品"""
-    return await service.update_dish(dish_id, dish_data)
+    dish = await service.update_dish(dish_id, dish_data)
+    return dish
 
 
 @router.delete("/{dish_id}", status_code=status.HTTP_204_NO_CONTENT)
@@ -77,5 +81,5 @@ async def delete_dish(
     service: DishService = Depends(get_dish_service),
 ):
     """删除菜品"""
+
     await service.delete_dish(dish_id)
-    return
