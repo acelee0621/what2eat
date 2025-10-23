@@ -9,8 +9,10 @@ dependencies = [
     "alembic>=1.17.0",
     "asyncpg>=0.30.0",
     "fastapi>=0.119.0",
+    "fastapi-users[sqlalchemy]>=14.0.1",
     "loguru>=0.7.3",
     "pydantic-settings>=2.11.0",
+    "redis>=7.0.0",
     "sqlalchemy>=2.0.44",
     "uvicorn>=0.37.0",
 ]
