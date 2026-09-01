@@ -1,12 +1,12 @@
 # app/lifespan.py
-from typing import TypedDict
-from collections.abc import AsyncIterator
+from collections.abc import AsyncGenerator
 from contextlib import asynccontextmanager
+from typing import TypedDict
 
 from fastapi import FastAPI
-from redis.asyncio import Redis
 from httpx import AsyncClient
 from loguru import logger
+from redis.asyncio import Redis
 
 from src.core.redis_db import create_auth_redis, create_cache_redis
 
@@ -20,7 +20,7 @@ class State(TypedDict):
 
 
 @asynccontextmanager
-async def lifespan(app: FastAPI) -> AsyncIterator[State]:
+async def lifespan(app: FastAPI) -> AsyncGenerator[State]:
     # -------- 启动 --------
     logger.info("应用启动，开始加载所有资源...")
     # await create_db_and_tables()
