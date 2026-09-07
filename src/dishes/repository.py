@@ -1,7 +1,8 @@
 # src/dishes/repository.py
-from typing import Mapping, Any
+from collections.abc import Mapping
+from typing import Any
 
-from sqlalchemy import select, or_, desc, asc
+from sqlalchemy import asc, desc, or_, select
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.asyncio import AsyncSession
 

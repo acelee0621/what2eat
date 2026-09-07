@@ -1,9 +1,7 @@
 # src/auth/user_manager.py
 import uuid
-from typing import Optional
 
 from fastapi import Depends, Request
-from redis.asyncio import Redis
 from fastapi_users import BaseUserManager, FastAPIUsers, UUIDIDMixin
 from fastapi_users.authentication import (
     AuthenticationBackend,
@@ -16,10 +14,12 @@ from fastapi_users.authentication.strategy.db import (
     DatabaseStrategy,
 )
 from fastapi_users.db import SQLAlchemyUserDatabase
+from redis.asyncio import Redis
+
+from src.auth.dependencies import get_access_token_db, get_user_db
+from src.auth.model import AccessToken, User
 from src.core.config import settings
 from src.core.redis_db import get_auth_redis
-from src.auth.dependencies import get_user_db, get_access_token_db
-from src.auth.model import User, AccessToken
 
 # 根据需要使用单个SECRET，或者拆分成不同的
 # 分别用于重设密码及验证
@@ -30,16 +30,16 @@ class UserManager(UUIDIDMixin, BaseUserManager[User, uuid.UUID]):
     reset_password_token_secret = SECRET
     verification_token_secret = SECRET
 
-    async def on_after_register(self, user: User, request: Optional[Request] = None):
+    async def on_after_register(self, user: User, request: Request | None = None):
         print(f"User {user.id} has registered.")
 
     async def on_after_forgot_password(
-        self, user: User, token: str, request: Optional[Request] = None
+        self, user: User, token: str, request: Request | None = None
     ):
         print(f"User {user.id} has forgot their password. Reset token: {token}")
 
     async def on_after_request_verify(
-        self, user: User, token: str, request: Optional[Request] = None
+        self, user: User, token: str, request: Request | None = None
     ):
         print(f"Verification requested for user {user.id}. Verification token: {token}")
 

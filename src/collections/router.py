@@ -4,17 +4,17 @@ from typing import Annotated, Literal
 from fastapi import APIRouter, Depends, Path, Query, status
 from loguru import logger
 
-from src.collections.service import CollectionService
+from src.auth.schemas import UserRead
+from src.auth.user_manager import get_current_user
+from src.collections.dependencies import get_dish_id
 from src.collections.repository import CollectionRepository
 from src.collections.schema import (
     CollectionCreate,
-    CollectionUpdate,
     CollectionResponse,
+    CollectionUpdate,
 )
-from src.collections.dependencies import get_dish_id
+from src.collections.service import CollectionService
 from src.core.database import get_db
-from src.auth.user_manager import get_current_user
-from src.auth.schemas import UserRead
 
 router = APIRouter(prefix="/collections", tags=["Collections"])
 
@@ -52,7 +52,7 @@ async def get_collection(
         logger.info(f"获取到收藏, ID: {collection_id}")
         return collection
     except Exception as e:
-        logger.error(f"获取 ID 为 {collection_id} 的收藏时出错: {str(e)}")
+        logger.error(f"获取 ID 为 {collection_id} 的收藏时出错: {e!s}")
         raise
 
 
@@ -129,7 +129,7 @@ async def add_dish_to_collection(
         return updated_collection
     except Exception as e:
         logger.error(
-            f"Failed to add dish {dish_id} to collection {collection_id}: {str(e)}"
+            f"Failed to add dish {dish_id} to collection {collection_id}: {e!s}"
         )
         raise
 
@@ -156,6 +156,6 @@ async def remove_tag_from_note(
         return updated_collection
     except Exception as e:
         logger.error(
-            f"Failed to remove dish {dish_id} from collection {collection_id}: {str(e)}"
+            f"Failed to remove dish {dish_id} from collection {collection_id}: {e!s}"
         )
         raise

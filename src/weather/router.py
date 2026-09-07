@@ -1,14 +1,13 @@
-from fastapi import APIRouter, Depends, Query
 import httpx
+from fastapi import APIRouter, Depends, Query
 from redis.asyncio import Redis
 
-from src.core.redis_db import get_cache_redis
-from src.weather.dependencies import get_http_client
-from src.weather.service import fetch_weather
-from src.weather.schemas import WeatherResponse
-from src.weather.cache_weather import fetch_weather_with_cache
 from src.core.exception import NotFoundException
-
+from src.core.redis_db import get_cache_redis
+from src.weather.cache_weather import fetch_weather_with_cache
+from src.weather.dependencies import get_http_client
+from src.weather.schemas import WeatherResponse
+from src.weather.service import fetch_weather
 
 router = APIRouter(prefix="/weather", tags=["Weather"])
 

@@ -1,16 +1,16 @@
 # src/main.py
-from fastapi import FastAPI, Response, Depends
+from fastapi import FastAPI, Response
 
-from src.core.config import settings
-from src.lifespan import lifespan
-from src.core.exception import register_exception_handlers
-from src.dishes.router import router as dishes_router
-from src.collections.router import router as collections_router
-from src.weather.router import router as weather_router
+from src.auth.router import register_fastapi_users_routes
 
 # FastAPI Users 路由引入
 from src.auth.user_manager import fastapi_users
-from src.auth.router import register_fastapi_users_routes
+from src.collections.router import router as collections_router
+from src.core.config import settings
+from src.core.exception import register_exception_handlers
+from src.dishes.router import router as dishes_router
+from src.lifespan import lifespan
+from src.weather.router import router as weather_router
 
 # from src.core.config import get_settings, Settings
 

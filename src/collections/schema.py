@@ -1,5 +1,6 @@
 from datetime import datetime
 from typing import Annotated, Literal
+
 from pydantic import BaseModel, Field
 
 from src.dishes.schema import DishResponse
@@ -14,8 +15,6 @@ class CollectionBase(BaseModel):
 # 创建模型
 class CollectionCreate(CollectionBase):
     """用于创建收藏"""
-
-    pass
 
 
 # 更新模型（全部可选）

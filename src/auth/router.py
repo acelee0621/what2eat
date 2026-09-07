@@ -2,8 +2,8 @@
 from fastapi import FastAPI
 from fastapi_users import FastAPIUsers
 
-from src.auth.user_manager import redis_auth_backend,database_auth_backend
-from src.auth.schemas import UserRead, UserCreate, UserUpdate
+from src.auth.schemas import UserCreate, UserRead, UserUpdate
+from src.auth.user_manager import database_auth_backend, redis_auth_backend
 
 
 def register_fastapi_users_routes(
@@ -22,7 +22,7 @@ def register_fastapi_users_routes(
         fastapi_users.get_auth_router(database_auth_backend),
         prefix="/auth/cookie",
         tags=["auth"],
-    )    
+    )
     app.include_router(
         fastapi_users.get_register_router(UserRead, UserCreate),
         prefix="/auth",

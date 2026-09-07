@@ -1,15 +1,15 @@
 # src/dishes/service.py
 from sqlalchemy.exc import IntegrityError
 
-from src.dishes.repository import DishRepository
 from src.core.exception import (
-    NotFoundException,
     AlreadyExistsException,
+    NotFoundException,
 )
+from src.dishes.repository import DishRepository
 from src.dishes.schema import (
     DishCreate,
-    DishUpdate,
     DishResponse,
+    DishUpdate,
 )
 
 
@@ -18,7 +18,6 @@ class DishService:
 
     def __init__(self, repository: DishRepository):
         self.repository = repository
-        
 
     async def create_dish(self, dish_data: DishCreate) -> DishResponse:
         """创建菜品，处理唯一约束冲突"""

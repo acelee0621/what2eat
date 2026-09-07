@@ -1,20 +1,20 @@
-from typing import TYPE_CHECKING
 import uuid
+from typing import TYPE_CHECKING
 
 from sqlalchemy import (
+    UUID,
+    ForeignKey,
     Integer,
     String,
     Text,
-    UUID,
-    ForeignKey,    
 )
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from src.core.base_model import Base, DateTimeMixin
 
 if TYPE_CHECKING:
-    from src.dishes.model import Dish
     from src.auth.model import User
+    from src.dishes.model import Dish
 
 
 class Collection(Base, DateTimeMixin):
@@ -30,7 +30,7 @@ class Collection(Base, DateTimeMixin):
     )
 
     # 1. 与 User 的多对一关系
-    user: Mapped["User"] = relationship("User",back_populates="collections")
+    user: Mapped["User"] = relationship("User", back_populates="collections")
 
     # 2. 与 Dish 的多对多关系
     dishes: Mapped[list["Dish"]] = relationship(

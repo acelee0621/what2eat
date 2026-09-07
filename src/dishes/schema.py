@@ -1,5 +1,6 @@
 from datetime import datetime
 from typing import Annotated, Literal
+
 from pydantic import BaseModel, Field
 
 
@@ -12,8 +13,6 @@ class DishBase(BaseModel):
 # 创建模型
 class DishCreate(DishBase):
     """用于创建菜品"""
-
-    pass
 
 
 # 更新模型（全部可选）

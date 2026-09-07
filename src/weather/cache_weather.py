@@ -1,12 +1,13 @@
 import json
 
-from loguru import logger
 import httpx
+from loguru import logger
 from redis.asyncio import Redis
 
 from src.weather.service import fetch_weather
 
 CACHE_TTL = 60  # 缓存 60 秒，可根据 API 更新频率调节
+
 
 async def fetch_weather_with_cache(client: httpx.AsyncClient, redis: Redis, city: str):
     cache_key = f"weather:{city}"
@@ -21,9 +22,8 @@ async def fetch_weather_with_cache(client: httpx.AsyncClient, redis: Redis, city
     data = await fetch_weather(client, city)
     logger.info(f"从 API 获取到数据: {data}")
     if data is None:
-        return None    
+        return None
     logger.info(f"数据写入缓存: {cache_key}")
     # 3) 写入缓存
     await redis.set(cache_key, json.dumps(data), ex=CACHE_TTL)
     return data
-    

@@ -1,10 +1,9 @@
 from datetime import datetime, timezone
 
-from sqlalchemy import MetaData, func, DateTime
+from sqlalchemy import DateTime, MetaData, func
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 
 from src.core.config import settings
-
 
 database_naming_convention = {
     "ix": "%(column_0_label)s_idx",

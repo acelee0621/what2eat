@@ -4,14 +4,14 @@ from typing import Literal
 from fastapi import APIRouter, Depends, Path, Query, status
 from loguru import logger
 
-from src.dishes.service import DishService
-from src.dishes.repository import DishRepository
-from src.dishes.schema import DishCreate, DishUpdate, DishResponse
+from src.auth.user_manager import current_superuser, get_current_user
 from src.core.database import get_db
-from src.auth.user_manager import get_current_user, current_superuser
+from src.dishes.repository import DishRepository
+from src.dishes.schema import DishCreate, DishResponse, DishUpdate
+from src.dishes.service import DishService
 
 router = APIRouter(
-    prefix="/dishes", tags=["Dishes"], dependencies=[Depends(get_current_user)] 
+    prefix="/dishes", tags=["Dishes"], dependencies=[Depends(get_current_user)]
 )
 
 
@@ -43,7 +43,7 @@ async def get_dish(
         logger.info(f"获取到菜品, ID: {dish_id}")
         return dish
     except Exception as e:
-        logger.error(f"获取 ID 为 {dish_id} 的菜品时出错: {str(e)}")
+        logger.error(f"获取 ID 为 {dish_id} 的菜品时出错: {e!s}")
         raise
 
 

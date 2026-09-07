@@ -1,13 +1,14 @@
 # src/collections/repository.py
-from typing import Mapping, Any
+from collections.abc import Mapping
+from typing import Any
 
-from sqlalchemy import func, select, or_, desc, asc
+from sqlalchemy import asc, desc, func, or_, select
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from src.collections.model import Collection
+from src.core.exception import AlreadyExistsException, NotFoundException
 from src.dishes.model import Dish
-from src.core.exception import NotFoundException, AlreadyExistsException
 
 
 class CollectionRepository:
@@ -114,7 +115,6 @@ class CollectionRepository:
 
         await self.session.delete(item)
         await self.session.commit()
-        
 
     async def add_dish_to_collection(
         self, collection_id: int, dish_id: int, current_user

@@ -2,8 +2,8 @@
 from src.collections.repository import CollectionRepository
 from src.collections.schema import (
     CollectionCreate,
-    CollectionUpdate,
     CollectionResponse,
+    CollectionUpdate,
 )
 
 
@@ -21,7 +21,9 @@ class CollectionService:
         item = await self.repository.create(dict_data, current_user)
         return CollectionResponse.model_validate(item)
 
-    async def get_collection_by_id(self, item_id: int, current_user) -> CollectionResponse:
+    async def get_collection_by_id(
+        self, item_id: int, current_user
+    ) -> CollectionResponse:
         """通过 ID 获取收藏"""
         item = await self.repository.get_by_id(item_id, current_user)
         return CollectionResponse.model_validate(item)
